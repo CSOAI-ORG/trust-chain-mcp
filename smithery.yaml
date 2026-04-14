@@ -1,3 +1,22 @@
 name: trust-chain-mcp
-description: MEOK AI Labs - Utrust chain
+description: MEOK AI Labs - AI Governance & Compliance
 version: 1.0.0
+tools:
+- name: initiate_trust_chain
+  description: ''
+  parameters:
+  - name: root_agent
+    type: string
+    required: true
+  - name: participants
+    type: array
+    required: true
+- name: verify_participant
+  description: ''
+  parameters:
+  - name: chain_id
+    type: string
+    required: true
+  - name: agent_id
+    type: string
+    required: true
