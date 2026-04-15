@@ -3,6 +3,7 @@
 import sys, os
 sys.path.insert(0, os.path.expanduser('~/clawd/meok-labs-engine/shared'))
 from auth_middleware import check_access
+from persistence import ServerStore
 
 import json
 import hashlib
@@ -11,6 +12,8 @@ import math
 from datetime import datetime, timezone
 from collections import defaultdict
 from mcp.server.fastmcp import FastMCP
+
+_store = ServerStore("trust-chain")
 
 FREE_DAILY_LIMIT = 15
 _usage = defaultdict(list)
@@ -23,12 +26,6 @@ def _rl(c="anon"):
         return json.dumps({"error": f"Limit {FREE_DAILY_LIMIT}/day"})
     _usage[c].append(now)
     return None
-
-
-# In-memory trust store
-_ANCHORS = {}  # anchor_id -> anchor data
-_ATTESTATIONS = {}  # attestation_id -> attestation data
-_REVOCATIONS = set()  # set of revoked anchor/attestation IDs
 
 
 def _hash_data(data: str) -> str:
@@ -68,7 +65,7 @@ def create_trust_anchor(entity_id: str, entity_name: str, trust_level: int = 5, 
     anchor_data = f"{entity_id}:{entity_name}:{now.isoformat()}"
     anchor_id = _short_hash(anchor_data)
 
-    if anchor_id in _ANCHORS:
+    if _store.hget("anchors", anchor_id):
         return {"error": "Anchor already exists for this entity. Use add_attestation instead."}
 
     anchor = {
@@ -82,7 +79,7 @@ def create_trust_anchor(entity_id: str, entity_name: str, trust_level: int = 5, 
         "metadata": metadata or {},
         "status": "active",
     }
-    _ANCHORS[anchor_id] = anchor
+    _store.hset("anchors", anchor_id, anchor)
 
     return {
         "status": "created",
@@ -104,12 +101,12 @@ def verify_chain(anchor_id: str, api_key: str = "") -> dict:
     if err := _rl(api_key or "anon"):
         return err
 
-    if anchor_id not in _ANCHORS:
+    anchor = _store.hget("anchors", anchor_id)
+    if not anchor:
         return {"error": f"Anchor {anchor_id} not found."}
 
-    anchor = _ANCHORS[anchor_id]
-
-    if anchor_id in _REVOCATIONS:
+    revocations = _store.get("revocations", [])
+    if anchor_id in revocations:
         return {
             "anchor_id": anchor_id,
             "valid": False,
@@ -125,13 +122,13 @@ def verify_chain(anchor_id: str, api_key: str = "") -> dict:
     issues = []
 
     for att_id in attestation_ids:
-        att = _ATTESTATIONS.get(att_id)
+        att = _store.hget("attestations", att_id)
         if att is None:
             issues.append(f"Attestation {att_id} not found.")
             invalid_attestations += 1
             continue
 
-        if att_id in _REVOCATIONS:
+        if att_id in revocations:
             issues.append(f"Attestation {att_id} has been revoked.")
             revoked_attestations += 1
             continue
@@ -147,7 +144,7 @@ def verify_chain(anchor_id: str, api_key: str = "") -> dict:
         valid_attestations += 1
 
     chain_hash = _compute_chain_hash(chain_entries)
-    chain_valid = invalid_attestations == 0 and anchor_id not in _REVOCATIONS
+    chain_valid = invalid_attestations == 0 and anchor_id not in revocations
 
     return {
         "anchor_id": anchor_id,
@@ -163,7 +160,7 @@ def verify_chain(anchor_id: str, api_key: str = "") -> dict:
         },
         "issues": issues,
         "trust_level": anchor["trust_level"],
-        "status": "revoked" if anchor_id in _REVOCATIONS else "valid" if chain_valid else "compromised",
+        "status": "revoked" if anchor_id in revocations else "valid" if chain_valid else "compromised",
         "verified_at": datetime.now(timezone.utc).isoformat(),
     }
 
@@ -177,10 +174,12 @@ def add_attestation(anchor_id: str, attester_id: str, claim: str, confidence: fl
     if err := _rl(api_key or "anon"):
         return err
 
-    if anchor_id not in _ANCHORS:
+    anchor = _store.hget("anchors", anchor_id)
+    if not anchor:
         return {"error": f"Anchor {anchor_id} not found."}
 
-    if anchor_id in _REVOCATIONS:
+    revocations = _store.get("revocations", [])
+    if anchor_id in revocations:
         return {"error": "Cannot attest to a revoked anchor."}
 
     if confidence < 0 or confidence > 1:
@@ -201,13 +200,14 @@ def add_attestation(anchor_id: str, attester_id: str, claim: str, confidence: fl
         "hash": _hash_data(att_data),
         "status": "active",
     }
-    _ATTESTATIONS[att_id] = attestation
-    _ANCHORS[anchor_id]["attestations"].append(att_id)
+    _store.hset("attestations", att_id, attestation)
+    anchor["attestations"].append(att_id)
+    _store.hset("anchors", anchor_id, anchor)
 
     # Recompute chain hash
-    chain_entries = [{"anchor_id": anchor_id, "fingerprint": _ANCHORS[anchor_id]["fingerprint"]}]
-    for a_id in _ANCHORS[anchor_id]["attestations"]:
-        a = _ATTESTATIONS.get(a_id)
+    chain_entries = [{"anchor_id": anchor_id, "fingerprint": anchor["fingerprint"]}]
+    for a_id in anchor["attestations"]:
+        a = _store.hget("attestations", a_id)
         if a:
             chain_entries.append({"attestation_id": a_id, "hash": a["hash"]})
     chain_hash = _compute_chain_hash(chain_entries)
@@ -235,12 +235,12 @@ def get_trust_score(anchor_id: str, api_key: str = "") -> dict:
     if err := _rl(api_key or "anon"):
         return err
 
-    if anchor_id not in _ANCHORS:
+    anchor = _store.hget("anchors", anchor_id)
+    if not anchor:
         return {"error": f"Anchor {anchor_id} not found."}
 
-    anchor = _ANCHORS[anchor_id]
-
-    if anchor_id in _REVOCATIONS:
+    revocations = _store.get("revocations", [])
+    if anchor_id in revocations:
         return {
             "anchor_id": anchor_id,
             "trust_score": 0.0,
@@ -251,8 +251,8 @@ def get_trust_score(anchor_id: str, api_key: str = "") -> dict:
     attestation_ids = anchor.get("attestations", [])
     active_attestations = []
     for att_id in attestation_ids:
-        att = _ATTESTATIONS.get(att_id)
-        if att and att_id not in _REVOCATIONS:
+        att = _store.hget("attestations", att_id)
+        if att and att_id not in revocations:
             active_attestations.append(att)
 
     # Base score from trust level (0-10 scaled to 0-0.5)
@@ -324,26 +324,32 @@ def revoke_trust(target_id: str, reason: str, revoked_by: str, api_key: str = ""
     target_type = None
     target_name = None
 
-    if target_id in _ANCHORS:
+    anchor = _store.hget("anchors", target_id)
+    att = _store.hget("attestations", target_id)
+    if anchor:
         target_type = "anchor"
-        target_name = _ANCHORS[target_id]["entity_name"]
-        _ANCHORS[target_id]["status"] = "revoked"
-    elif target_id in _ATTESTATIONS:
+        target_name = anchor["entity_name"]
+        anchor["status"] = "revoked"
+        _store.hset("anchors", target_id, anchor)
+    elif att:
         target_type = "attestation"
-        target_name = f"attestation by {_ATTESTATIONS[target_id]['attester_id']}"
-        _ATTESTATIONS[target_id]["status"] = "revoked"
+        target_name = f"attestation by {att['attester_id']}"
+        att["status"] = "revoked"
+        _store.hset("attestations", target_id, att)
     else:
         return {"error": f"Target {target_id} not found as anchor or attestation."}
 
-    if target_id in _REVOCATIONS:
+    revocations = _store.get("revocations", [])
+    if target_id in revocations:
         return {"error": f"Target {target_id} is already revoked."}
 
-    _REVOCATIONS.add(target_id)
+    revocations.append(target_id)
+    _store.set("revocations", revocations)
 
     # If revoking an anchor, count affected attestations
     affected = 0
     if target_type == "anchor":
-        affected = len(_ANCHORS[target_id].get("attestations", []))
+        affected = len(anchor.get("attestations", []))
 
     return {
         "status": "revoked",
