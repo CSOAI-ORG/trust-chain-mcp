@@ -49,11 +49,11 @@ def _compute_chain_hash(entries: list) -> str:
     return chain
 
 
-mcp = FastMCP("trust-chain-mcp", instructions="Trust chain and attestation management by MEOK AI Labs.")
+mcp = FastMCP("trust-chain", instructions="Trust chain and attestation management by MEOK AI Labs.")
 
 
-@mcp.tool(name="create_trust_anchor")
-async def create_trust_anchor(entity_id: str, entity_name: str, trust_level: int = 5, metadata: dict = None, api_key: str = "") -> dict:
+@mcp.tool()
+def create_trust_anchor(entity_id: str, entity_name: str, trust_level: int = 5, metadata: dict = None, api_key: str = "") -> dict:
     """Create a new trust anchor (root of trust) for an entity."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -95,8 +95,8 @@ async def create_trust_anchor(entity_id: str, entity_name: str, trust_level: int
     }
 
 
-@mcp.tool(name="verify_chain")
-async def verify_chain(anchor_id: str, api_key: str = "") -> dict:
+@mcp.tool()
+def verify_chain(anchor_id: str, api_key: str = "") -> dict:
     """Verify the integrity of a trust chain by validating all attestations."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -168,8 +168,8 @@ async def verify_chain(anchor_id: str, api_key: str = "") -> dict:
     }
 
 
-@mcp.tool(name="add_attestation")
-async def add_attestation(anchor_id: str, attester_id: str, claim: str, confidence: float = 0.8, evidence: str = "", api_key: str = "") -> dict:
+@mcp.tool()
+def add_attestation(anchor_id: str, attester_id: str, claim: str, confidence: float = 0.8, evidence: str = "", api_key: str = "") -> dict:
     """Add an attestation (claim) to an existing trust anchor."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -226,8 +226,8 @@ async def add_attestation(anchor_id: str, attester_id: str, claim: str, confiden
     }
 
 
-@mcp.tool(name="get_trust_score")
-async def get_trust_score(anchor_id: str, api_key: str = "") -> dict:
+@mcp.tool()
+def get_trust_score(anchor_id: str, api_key: str = "") -> dict:
     """Calculate a composite trust score for an anchor based on its attestations."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -312,8 +312,8 @@ async def get_trust_score(anchor_id: str, api_key: str = "") -> dict:
     }
 
 
-@mcp.tool(name="revoke_trust")
-async def revoke_trust(target_id: str, reason: str, revoked_by: str, api_key: str = "") -> dict:
+@mcp.tool()
+def revoke_trust(target_id: str, reason: str, revoked_by: str, api_key: str = "") -> dict:
     """Revoke a trust anchor or attestation. This invalidates the chain."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
