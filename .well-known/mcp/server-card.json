@@ -1,0 +1,58 @@
+{
+  "name": "trust-chain",
+  "description": "Trust chain and attestation management by MEOK AI Labs.",
+  "version": "1.0.0",
+  "protocol_version": "2025-11-25",
+  "publisher": {
+    "name": "MEOK AI Labs",
+    "url": "https://meok.ai",
+    "email": "nicholas@meok.ai"
+  },
+  "repository": "https://github.com/CSOAI-ORG/trust-chain-mcp",
+  "license": "MIT",
+  "transport": [
+    "stdio",
+    "streamable-http"
+  ],
+  "authentication": {
+    "type": "api-key",
+    "free_tier": true,
+    "free_limit": "15 calls/day"
+  },
+  "tools": [
+    {
+      "name": "create_trust_anchor",
+      "description": "Create a new trust anchor (root of trust) for an entity."
+    },
+    {
+      "name": "verify_chain",
+      "description": "Verify the integrity of a trust chain by validating all attestations."
+    },
+    {
+      "name": "add_attestation",
+      "description": "Add an attestation (claim) to an existing trust anchor."
+    },
+    {
+      "name": "get_trust_score",
+      "description": "Calculate a composite trust score for an anchor based on its attestations."
+    },
+    {
+      "name": "revoke_trust",
+      "description": "Revoke a trust anchor or attestation. This invalidates the chain."
+    }
+  ],
+  "categories": [
+    "AI & Machine Learning",
+    "Developer Tools",
+    "Security & Compliance"
+  ],
+  "pricing": {
+    "free": {
+      "calls_per_day": 15
+    },
+    "pro": {
+      "price": "$29/month",
+      "url": "https://meok.ai/pricing"
+    }
+  }
+}
