@@ -1,22 +1,61 @@
 name: trust-chain-mcp
-description: MEOK AI Labs - AI Governance & Compliance
+description: Trust chain and attestation management by MEOK AI Labs.
 version: 1.0.0
 tools:
-- name: initiate_trust_chain
-  description: ''
+- name: create_trust_anchor
+  description: Create a new trust anchor (root of trust) for an entity.
   parameters:
-  - name: root_agent
+  - name: entity_id
     type: string
     required: true
-  - name: participants
-    type: array
-    required: true
-- name: verify_participant
-  description: ''
-  parameters:
-  - name: chain_id
+  - name: entity_name
     type: string
     required: true
-  - name: agent_id
+  - name: trust_level
+    type: integer
+    required: false
+  - name: metadata
+    type: object
+    required: false
+- name: verify_chain
+  description: Verify the integrity of a trust chain by validating all attestations.
+  parameters:
+  - name: anchor_id
+    type: string
+    required: true
+- name: add_attestation
+  description: Add an attestation (claim) to an existing trust anchor.
+  parameters:
+  - name: anchor_id
+    type: string
+    required: true
+  - name: attester_id
+    type: string
+    required: true
+  - name: claim
+    type: string
+    required: true
+  - name: confidence
+    type: number
+    required: false
+  - name: evidence
+    type: string
+    required: false
+- name: get_trust_score
+  description: Calculate a composite trust score for an anchor based on its attestations.
+  parameters:
+  - name: anchor_id
+    type: string
+    required: true
+- name: revoke_trust
+  description: Revoke a trust anchor or attestation. This invalidates the chain.
+  parameters:
+  - name: target_id
+    type: string
+    required: true
+  - name: reason
+    type: string
+    required: true
+  - name: revoked_by
     type: string
     required: true

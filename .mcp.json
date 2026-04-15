@@ -1,43 +1,112 @@
 {
   "name": "trust-chain-mcp",
-  "description": "MEOK AI Labs - AI Governance & Compliance",
+  "description": "> **By [MEOK AI Labs](https://meok.ai)** \u2014 Trust chain and attestation management by MEOK AI Labs.",
   "version": "1.0.0",
   "tools": [
     {
-      "name": "initiate_trust_chain",
-      "description": "",
+      "name": "create_trust_anchor",
+      "description": "Create a new trust anchor (root of trust) for an entity.",
       "parameters": {
         "type": "object",
         "properties": {
-          "root_agent": {
+          "entity_id": {
             "type": "string"
           },
-          "participants": {
-            "type": "array"
+          "entity_name": {
+            "type": "string"
+          },
+          "trust_level": {
+            "type": "integer"
+          },
+          "metadata": {
+            "type": "object"
           }
         },
         "required": [
-          "root_agent",
-          "participants"
+          "entity_id",
+          "entity_name"
         ]
       }
     },
     {
-      "name": "verify_participant",
-      "description": "",
+      "name": "verify_chain",
+      "description": "Verify the integrity of a trust chain by validating all attestations.",
       "parameters": {
         "type": "object",
         "properties": {
-          "chain_id": {
-            "type": "string"
-          },
-          "agent_id": {
+          "anchor_id": {
             "type": "string"
           }
         },
         "required": [
-          "chain_id",
-          "agent_id"
+          "anchor_id"
+        ]
+      }
+    },
+    {
+      "name": "add_attestation",
+      "description": "Add an attestation (claim) to an existing trust anchor.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "anchor_id": {
+            "type": "string"
+          },
+          "attester_id": {
+            "type": "string"
+          },
+          "claim": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "number"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "anchor_id",
+          "attester_id",
+          "claim"
+        ]
+      }
+    },
+    {
+      "name": "get_trust_score",
+      "description": "Calculate a composite trust score for an anchor based on its attestations.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "anchor_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "anchor_id"
+        ]
+      }
+    },
+    {
+      "name": "revoke_trust",
+      "description": "Revoke a trust anchor or attestation. This invalidates the chain.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "revoked_by": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "target_id",
+          "reason",
+          "revoked_by"
         ]
       }
     }
