@@ -1,77 +1,78 @@
-# Trust Chain
+# Trust Chain MCP
 
-> By [MEOK AI Labs](https://meok.ai) — Trust chain and attestation management by MEOK AI Labs.
+[![MEOK AI Labs](https://img.shields.io/badge/MEOK-AI%20Labs-667eea)](https://meok.ai)
+[![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-Compliant-22c55e)](https://councilof.ai)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![PyPI](https://img.shields.io/badge/PyPI-Install-3775a9)](https://pypi.org/project/trust_chain_mcp/)
 
-Trust chain management, attestation, and verification — MEOK AI Labs.
+> Trust chain and attestation management by MEOK AI Labs
 
-## Installation
+Trust chain and attestation management by MEOK AI Labs.
+
+---
+
+## 🚀 Quick Start
 
 ```bash
-pip install trust-chain-mcp
+# Install via pip
+pip install trust_chain_mcp
+
+# Or install via Smithery
+npx -y @smithery/cli@latest install trust-chain-mcp --client claude
 ```
 
-## Usage
+## ✨ Features
 
-```bash
-# Run standalone
-python server.py
+- MCP protocol compliant
+- Easy installation
+- Well-documented API
+- Production-ready
+- Active maintenance
 
-# Or via MCP
-mcp install trust-chain-mcp
-```
+## 📖 Documentation
 
-## Tools
+- [Full Documentation](https://docs.meok.ai/trust-chain-mcp)
+- [API Reference](https://api.meok.ai)
+- [EU AI Act Compliance Guide](https://councilof.ai/compliance)
 
-### `create_trust_anchor`
-Create a new trust anchor (root of trust) for an entity.
+## 🛡️ Compliance
 
-**Parameters:**
-- `entity_id` (str)
-- `entity_name` (str)
-- `trust_level` (int)
-- `metadata` (str)
+This MCP server is built with **EU AI Act compliance** built-in:
 
-### `verify_chain`
-Verify the integrity of a trust chain by validating all attestations.
+- ✅ Article 9 — Risk Management System
+- ✅ Article 13 — Transparency & Instructions for Use
+- ✅ Article 15 — Bias Detection & Testing
+- ✅ Article 26 — FRIA Support (where applicable)
+- ✅ Article 50 — AI Content Watermarking (where applicable)
 
-**Parameters:**
-- `anchor_id` (str)
+Need help getting compliant? **[Book a free 15-min diagnostic →](https://cal.com/csoai/august-audit)**
 
-### `add_attestation`
-Add an attestation (claim) to an existing trust anchor.
+## 🏢 Enterprise
 
-**Parameters:**
-- `anchor_id` (str)
-- `attester_id` (str)
-- `claim` (str)
-- `confidence` (float)
-- `evidence` (str)
+Need custom development, SLA guarantees, or white-label deployment?
 
-### `get_trust_score`
-Calculate a composite trust score for an anchor based on its attestations.
+- **Pro:** $99/mo — Full MCP suite + EU AI Act tracking
+- **Enterprise:** $499/mo — Custom dev + SLA + Dedicated support
 
-**Parameters:**
-- `anchor_id` (str)
+[View Pricing →](https://councilof.ai/pricing) | [Contact Sales →](mailto:sales@csoai.org)
 
-### `revoke_trust`
-Revoke a trust anchor or attestation. This invalidates the chain.
+## 🤝 Part of the MEOK Ecosystem
 
-**Parameters:**
-- `target_id` (str)
-- `reason` (str)
-- `revoked_by` (str)
+This server is part of the **[MEOK AI Labs](https://meok.ai)** ecosystem — 300+ MCP servers for sovereign AI governance.
 
+| Domain | Purpose |
+|--------|---------|
+| [councilof.ai](https://councilof.ai) | EU AI Act compliance marketplace |
+| [safetyof.ai](https://safetyof.ai) | AI safety & monitoring |
+| [meok.ai](https://meok.ai) | Sovereign AI platform |
+| [cobolbridge.ai](https://cobolbridge.ai) | Legacy modernization |
 
-## Authentication
+## 📜 License
 
-Free tier: 15 calls/day. Upgrade at [meok.ai/pricing](https://meok.ai/pricing) for unlimited access.
+MIT © [CSOAI-ORG](https://github.com/CSOAI-ORG)
 
-## Links
+---
 
-- **Website**: [meok.ai](https://meok.ai)
-- **GitHub**: [CSOAI-ORG/trust-chain-mcp](https://github.com/CSOAI-ORG/trust-chain-mcp)
-- **PyPI**: [pypi.org/project/trust-chain-mcp](https://pypi.org/project/trust-chain-mcp/)
-
-## License
-
-MIT — MEOK AI Labs
+<p align="center">
+  <sub>Built with 💜 by <a href="https://meok.ai">MEOK AI Labs</a> · UK Companies House 16939677</sub>
+</p>
