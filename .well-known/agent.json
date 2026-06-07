@@ -1,0 +1,68 @@
+{
+  "name": "trust-chain-mcp",
+  "description": "Trust Chain MCP server. Tools: create trust anchor, verify chain, add attestation. Built by MEOK AI",
+  "url": "https://proofof.ai/scorecard/trust-chain-mcp.html",
+  "version": "1.0.4",
+  "protocolVersion": "0.2.0",
+  "provider": {
+    "organization": "MEOK AI Labs",
+    "url": "https://meok.ai"
+  },
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "defaultInputModes": [
+    "text"
+  ],
+  "defaultOutputModes": [
+    "text"
+  ],
+  "skills": [
+    {
+      "id": "create_trust_anchor",
+      "name": "Create Trust Anchor",
+      "description": "create_trust_anchor via trust-chain-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "verify_chain",
+      "name": "Verify Chain",
+      "description": "verify_chain via trust-chain-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "add_attestation",
+      "name": "Add Attestation",
+      "description": "add_attestation via trust-chain-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "get_trust_score",
+      "name": "Get Trust Score",
+      "description": "get_trust_score via trust-chain-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    },
+    {
+      "id": "revoke_trust",
+      "name": "Revoke Trust",
+      "description": "revoke_trust via trust-chain-mcp",
+      "tags": [
+        "mcp",
+        "compliance"
+      ]
+    }
+  ]
+}

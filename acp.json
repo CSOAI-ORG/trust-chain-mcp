@@ -1,0 +1,23 @@
+{
+  "acpVersion": "0.1",
+  "agent": {
+    "name": "trust-chain-mcp",
+    "description": "Trust Chain MCP server. Tools: create trust anchor, verify chain, add attestation. Built by MEOK AI",
+    "version": "1.0.4",
+    "provider": "MEOK AI Labs",
+    "interfaces": [
+      {
+        "type": "mcp",
+        "transport": "stdio",
+        "package": "trust-chain-mcp"
+      }
+    ],
+    "capabilities": [
+      "create_trust_anchor",
+      "verify_chain",
+      "add_attestation",
+      "get_trust_score",
+      "revoke_trust"
+    ]
+  }
+}
