@@ -1,0 +1,32 @@
+# Trust Chain MCP
+
+> Trust chain and attestation management by MEOK AI Labs
+
+`trust-chain-mcp` is a Model Context Protocol (MCP) server by MEOK AI Labs.
+
+## Install
+
+```bash
+pip install trust-chain-mcp
+```
+
+Or run without installing:
+
+```bash
+uvx trust-chain-mcp
+```
+
+## Tools
+
+- `create_trust_anchor` — Create a new trust anchor (root of trust) for an entity.
+- `verify_chain` — Verify the integrity of a trust chain by validating all attestations.
+- `add_attestation` — Add an attestation (claim) to an existing trust anchor.
+- `get_trust_score` — Calculate a composite trust score for an anchor based on its attestations.
+- `revoke_trust` — Revoke a trust anchor or attestation. This invalidates the chain.
+
+## Links
+
+- Source: https://github.com/CSOAI-ORG/trust-chain-mcp
+- PyPI: https://pypi.org/project/trust-chain-mcp/
+- MEOK AI Labs: https://meok.ai
+- Council of AI: https://councilof.ai
