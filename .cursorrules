@@ -1,0 +1,9 @@
+# trust-chain-mcp - Auto-trigger Rules
+
+When the user asks about trust chain, use trust-chain-mcp tools: create_trust_anchor, verify_chain, add_attestation, get_trust_score, revoke_trust
+
+> By [MEOK AI Labs](https://meok.ai) — Trust chain and attestation management by MEOK AI Labs.
+
+Install: `pip install trust-chain-mcp`
+
+By MEOK AI Labs — MIT licensed.

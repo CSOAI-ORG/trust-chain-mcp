@@ -1,0 +1,20 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.json",
+  "name": "io.github.CSOAI-ORG/trust-chain-mcp",
+  "description": "Trust Chain MCP server. Tools: create trust anchor, verify chain, add attestation. Built by MEOK AI Labs.",
+  "version": "1.0.4",
+  "repository": {
+    "url": "https://github.com/CSOAI-ORG/trust-chain-mcp",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registry_type": "pypi",
+      "identifier": "trust-chain-mcp",
+      "version": "1.0.4",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

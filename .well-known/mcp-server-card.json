@@ -1,0 +1,28 @@
+{
+  "name": "trust-chain-mcp",
+  "title": "Trust Chain Mcp",
+  "description": "Trust Chain MCP server. Tools: create trust anchor, verify chain, add attestation. Built by MEOK AI Labs.",
+  "version": "1.0.4",
+  "homepage": "https://meok.ai",
+  "license": "MIT",
+  "transport": {
+    "type": "stdio"
+  },
+  "tools": [
+    {
+      "name": "create_trust_anchor"
+    },
+    {
+      "name": "verify_chain"
+    },
+    {
+      "name": "add_attestation"
+    },
+    {
+      "name": "get_trust_score"
+    },
+    {
+      "name": "revoke_trust"
+    }
+  ]
+}

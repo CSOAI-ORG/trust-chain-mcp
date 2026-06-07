@@ -1,32 +1,36 @@
-# Trust Chain MCP
-
-> Trust chain and attestation management by MEOK AI Labs
-
-`trust-chain-mcp` is a Model Context Protocol (MCP) server by MEOK AI Labs.
+# trust-chain-mcp
+# > By [MEOK AI Labs](https://meok.ai) — Trust chain and attestation management by MEOK AI Labs.
 
 ## Install
-
 ```bash
 pip install trust-chain-mcp
 ```
 
-Or run without installing:
-
-```bash
-uvx trust-chain-mcp
-```
+## Auth & Rate Limits
+- Free tier: 10 calls/day. No API key required.
+- Pro tier (£79/mo): unlimited + signed attestations.
+- Enterprise (£1,499/mo): white-label.
 
 ## Tools
 
-- `create_trust_anchor` — Create a new trust anchor (root of trust) for an entity.
-- `verify_chain` — Verify the integrity of a trust chain by validating all attestations.
-- `add_attestation` — Add an attestation (claim) to an existing trust anchor.
-- `get_trust_score` — Calculate a composite trust score for an anchor based on its attestations.
-- `revoke_trust` — Revoke a trust anchor or attestation. This invalidates the chain.
+### `create_trust_anchor`
+Create a new trust anchor (root of trust) for an entity.
 
-## Links
+### `verify_chain`
+Verify the integrity of a trust chain by validating all attestations.
 
-- Source: https://github.com/CSOAI-ORG/trust-chain-mcp
-- PyPI: https://pypi.org/project/trust-chain-mcp/
-- MEOK AI Labs: https://meok.ai
-- Council of AI: https://councilof.ai
+### `add_attestation`
+Add an attestation (claim) to an existing trust anchor.
+
+### `get_trust_score`
+Calculate a composite trust score for an anchor based on its attestations.
+
+### `revoke_trust`
+Revoke a trust anchor or attestation. This invalidates the chain.
+
+
+## Maintainer
+MEOK AI Labs · hello@meok.ai · https://meok.ai · MIT licensed
+
+## Pairs with
+Governance moat: pair this tool with any of MEOK's 38 governance MCPs (EU AI Act, DORA, NIS2, CRA, GDPR, ISO 42001, etc.) for full compliance coverage.

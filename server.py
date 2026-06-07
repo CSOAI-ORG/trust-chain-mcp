@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Trust chain management, attestation, and verification — MEOK AI Labs."""
+"""
+Trust chain management, attestation, and verification — MEOK AI Labs."""
 import sys, os
-sys.path.insert(0, os.path.expanduser('~/clawd/meok-labs-engine/shared'))
 from auth_middleware import check_access
 from persistence import ServerStore
 
@@ -54,7 +54,7 @@ def create_trust_anchor(entity_id: str, entity_name: str, trust_level: int = 5, 
     """Create a new trust anchor (root of trust) for an entity."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(api_key or "anon"):
         return err
 
@@ -97,7 +97,7 @@ def verify_chain(anchor_id: str, api_key: str = "") -> dict:
     """Verify the integrity of a trust chain by validating all attestations."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(api_key or "anon"):
         return err
 
@@ -170,7 +170,7 @@ def add_attestation(anchor_id: str, attester_id: str, claim: str, confidence: fl
     """Add an attestation (claim) to an existing trust anchor."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(api_key or "anon"):
         return err
 
@@ -231,7 +231,7 @@ def get_trust_score(anchor_id: str, api_key: str = "") -> dict:
     """Calculate a composite trust score for an anchor based on its attestations."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(api_key or "anon"):
         return err
 
@@ -317,7 +317,7 @@ def revoke_trust(target_id: str, reason: str, revoked_by: str, api_key: str = ""
     """Revoke a trust anchor or attestation. This invalidates the chain."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
-        return {"error": msg, "upgrade_url": "https://meok.ai/pricing"}
+        return {"error": msg, "upgrade_url": "https://councilof.ai"}
     if err := _rl(api_key or "anon"):
         return err
 
@@ -364,5 +364,8 @@ def revoke_trust(target_id: str, reason: str, revoked_by: str, api_key: str = ""
     }
 
 
-if __name__ == "__main__":
+def main():
     mcp.run()
+
+if __name__ == '__main__':
+    main()
