@@ -1,0 +1,112 @@
+{
+  "name": "Trust Chain Mcp",
+  "version": "1.0.4",
+  "url": "https://mcp.meok.ai/trust-chain-mcp/a2a",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionHistory": false
+  },
+  "protocolVersion": "0.3.0",
+  "description": "Trust Chain MCP server. Tools: create trust anchor, verify chain, add attestation. Built by MEOK AI Labs.",
+  "provider": {
+    "organization": "MEOK AI LABS",
+    "url": "https://meok.ai"
+  },
+  "defaultInputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "application/json",
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "create_trust_anchor",
+      "name": "Create Trust Anchor",
+      "description": "Create Trust Anchor — a tool of the trust-chain-mcp MCP.",
+      "tags": [
+        "attestation"
+      ],
+      "inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json",
+        "text/plain"
+      ]
+    },
+    {
+      "id": "verify_chain",
+      "name": "Verify Chain",
+      "description": "Verify Chain — a tool of the trust-chain-mcp MCP.",
+      "tags": [
+        "attestation"
+      ],
+      "inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json",
+        "text/plain"
+      ]
+    },
+    {
+      "id": "add_attestation",
+      "name": "Add Attestation",
+      "description": "Add Attestation — a tool of the trust-chain-mcp MCP.",
+      "tags": [
+        "attestation"
+      ],
+      "inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json",
+        "text/plain"
+      ]
+    },
+    {
+      "id": "get_trust_score",
+      "name": "Get Trust Score",
+      "description": "Get Trust Score — a tool of the trust-chain-mcp MCP.",
+      "tags": [
+        "attestation"
+      ],
+      "inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json",
+        "text/plain"
+      ]
+    },
+    {
+      "id": "revoke_trust",
+      "name": "Revoke Trust",
+      "description": "Revoke Trust — a tool of the trust-chain-mcp MCP.",
+      "tags": [
+        "attestation"
+      ],
+      "inputModes": [
+        "application/json",
+        "text/plain"
+      ],
+      "outputModes": [
+        "application/json",
+        "text/plain"
+      ]
+    }
+  ],
+  "documentationUrl": "https://meok.ai",
+  "x-meok": {
+    "mcp_name": "trust-chain-mcp",
+    "verifier": "https://proofof.ai/verify",
+    "governed_by": "CSOAI 52-article charter"
+  }
+}
